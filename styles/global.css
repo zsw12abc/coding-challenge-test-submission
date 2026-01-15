@@ -37,6 +37,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 small {
@@ -60,12 +61,51 @@ legend {
 }
 
 /* Responsive adjustments */
-@media (min-width: 768px) {
+
+/* Mobile: Reduce padding on sections */
+@media (max-width: 767px) {
+  main > section {
+    padding: 1.5rem 1rem !important;
+    margin: 1rem auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Ensure inputs don't overflow */
+  input {
+    max-width: 100%;
+  }
+}
+
+/* Desktop: Side-by-side layout */
+@media (min-width: 1024px) {
   main {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2rem;
     padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  main > section {
+    margin: 0 !important;
+    max-width: none !important;
+    height: auto;
+  }
+
+  /* Left column (Form) */
+  main > section:first-child {
+    flex: 0 0 450px; /* Fixed width for form */
+  }
+
+  /* Right column (Address Book) */
+  main > section:last-child {
+    flex: 1; /* Takes remaining space */
   }
 
   fieldset {
-    max-width: var(--width-input);
+    max-width: 100%; /* Let it fill the container */
   }
 }
