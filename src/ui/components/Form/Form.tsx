@@ -9,20 +9,23 @@ interface FormEntry {
   placeholder: string;
   // TODO: Defined a suitable type for extra props
   // This type should cover all different of attribute types
-  extraProps: any;
+  extraProps: React.InputHTMLAttributes<HTMLInputElement> & {
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  };
 }
 
 interface FormProps {
   label: string;
-  loading: boolean;
+  loading?: boolean;
   formEntries: FormEntry[];
-  onFormSubmit: () => void;
+  onFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   submitText: string;
 }
 
 const Form: FunctionComponent<FormProps> = ({
   label,
-  loading,
+  loading = false,
   formEntries,
   onFormSubmit,
   submitText
@@ -34,10 +37,10 @@ const Form: FunctionComponent<FormProps> = ({
         {formEntries.map(({ name, placeholder, extraProps }, index) => (
           <div key={`${name}-${index}`} className={$.formRow}>
             <InputText
-              key={`${name}-${index}`}
               name={name}
               placeholder={placeholder}
-              {...extraProps}
+              value={extraProps.value}
+              onChange={extraProps.onChange}
             />
           </div>
         ))}
